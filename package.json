@@ -2,7 +2,7 @@
   "name": "whoami",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --host=192.168.1.104",
+    "dev": "vite --host=192.168.1.6",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview --port 5050",
     "test:unit": "vitest --environment jsdom",

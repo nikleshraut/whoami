@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
-import numbers from './assets/numbers.jpg'
+import math from './assets/math.jpg'
 import abcCapital from './assets/abcCapital.jpg'
-import abcSmall from './assets/abcSmall.png'
-import shapes from './assets/shapes.png'
+import hindi from './assets/hindi.jpg'
+import letters from './assets/letters.jpg'
 import 'element-plus/dist/index.css'
 import './assets/base.css'
 </script>
@@ -13,30 +13,30 @@ import './assets/base.css'
     <el-container>
       <el-header>
         <el-row :gutter="20">
-          <el-col :xs="6" :span="2">
+          <el-col :xs="6" :span="3">
             <router-link to="/">
-              <img class="pointer" :src="numbers" width="100" height="100" />
+              <img class="pointer" :src="math" width="150" height="100" />
             </router-link>
           </el-col>
-          <el-col :xs="6" :span="2">
+          <el-col :xs="6" :span="3">
             <router-link to="/capital-aphabets">
-              <img class="pointer" :src="abcCapital" width="100" height="100" />
+              <img class="pointer" :src="abcCapital" width="150" height="100" />
             </router-link>
           </el-col>
-          <el-col :xs="6" :span="2">
+          <el-col :xs="6" :span="3">
             <router-link to="/small-aphabets">
-              <img class="pointer" :src="abcSmall" width="100" height="100" />
+              <img class="pointer" :src="hindi" width="150" height="100" />
             </router-link>
           </el-col>
-          <el-col :xs="6" :span="2">
-            <router-link to="/shapes">
-              <img class="pointer" :src="shapes" width="100" height="100" />
+          <el-col :xs="6" :span="3">
+            <router-link to="/letters">
+              <img class="pointer" :src="letters" width="150" height="100" />
             </router-link>
           </el-col>
         </el-row>
       </el-header>
       <el-main><router-view></router-view></el-main>
-      <el-footer>Created By Niklesh Raut</el-footer>
+      <!-- <el-footer>Created By Niklesh Raut</el-footer> -->
     </el-container>
   </div>
 </template>

@@ -4,6 +4,7 @@ const NumberView = () => import("../views/NumberView.vue")
 const SamllAlphabetsView = () => import("../views/SamllAlphabetsView.vue")
 const CapitalAlphabetsView = () => import("../views/CapitalAlphabetsView.vue")
 const ShapesView = () => import("../views/ShapesView.vue")
+const LettersView = () => import("../views/Letters.vue")
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,11 @@ const router = createRouter({
       path: "/shapes",
       name: "shapes",
       component: ShapesView,
+    },
+    {
+      path: "/letters",
+      name: "letters",
+      component: LettersView,
     },
   ],
 });

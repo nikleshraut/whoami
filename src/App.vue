@@ -73,6 +73,14 @@ body {
   padding: 0px;
   margin: 0px;
 }
-
+.common-layout .el-header .el-row{
+  flex-direction: column;
+}
+.common-layout .el-header {
+  width: 20%;
+}
+.common-layout .el-container {
+  flex-direction: row;
+}
 
 </style>

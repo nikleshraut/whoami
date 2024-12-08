@@ -1,45 +1,48 @@
 <template>
+    <div class="" @click="focusOnKeyControl">
+        <el-row :gutter="20" class="mb-4">
+            <el-col><input type="checkbox" @change="checkAll"/> Select All</el-col>
+        </el-row>
+        <el-row :gutter="20" class="mb-4">
+            <el-col><span class="p-2 mr-1 border" :class="{'selected': alphabets.includes(i)}" v-for="i in baseAlphabets" @click="addAlphabet(i)">{{ i }}</span></el-col>
+        </el-row>
+        <el-row :gutter="20" class="mb-4">
+            <el-col><span class="p-2 mr-1 border" :class="{'selected': vowels.includes(i)}" v-for="i in baseVowels" @click="addVowel(i)">{{ i }}</span></el-col>
+        </el-row>
 
-    <el-row :gutter="20" class="mb-4">
-        <el-col><span class="p-2 mr-1 border" :class="{'selected': alphabets.includes(i)}" v-for="i in baseAlphabets" @click="addAlphabet(i)">{{ i }}</span></el-col>
-    </el-row>
-    <el-row :gutter="20" class="mb-4">
-        <el-col><span class="p-2 mr-1 border" :class="{'selected': vowels.includes(i)}" v-for="i in baseVowels" @click="addVowel(i)">{{ i }}</span></el-col>
-    </el-row>
-
-    <el-row :gutter="20" class="h-80">
-        <el-col :span="8" class="h-100" @click="getRandomString"
-            ><div class="grid-content bg-purple h-100"
-        /></el-col>
-        <el-col :span="8" class="h-100">
-            <div class="random-number" :class="'random-number-color-' + randomColor">{{ randomString }}</div>
-        </el-col>
-        <el-col :span="8" class="h-100" @click="getRandomString"
-            ><div class="grid-content bg-purple h-100"
-        /></el-col>
-    </el-row>
-    <el-row class="mt-4">
-        <el-col :span="8" class="h-100">
-            <input id="answer" type="text" @keyup.enter="inputAnswer(true)" @keyup.space="inputAnswer(false)" />
-        </el-col>
-    </el-row>
-    <el-row class="mt-4">
-        <!-- <el-col :span="8" class="h-100"> -->
-            <el-table :data="summary" style="width: 100%">
-                <el-table-column prop="key" label="Word" width="180" />
-                <el-table-column prop="correct" label="Correct Count" width="180" />
-                <el-table-column label="Incorrect Count"><template #default="scope"><div class="text-danger">{{scope.row.incorrect}}</div></template></el-table-column>
-            </el-table>
-        <!-- </el-col> -->
-    </el-row>
-
+        <el-row :gutter="20" class="h-80">
+            <el-col :span="8" class="h-100" @click="getRandomString"
+                ><div class="grid-content bg-purple h-100"
+            /></el-col>
+            <el-col :span="8" class="h-100">
+                <div class="random-number" :class="'random-number-color-' + randomColor">{{ randomString }}</div>
+            </el-col>
+            <el-col :span="8" class="h-100" @click="getRandomString"
+                ><div class="grid-content bg-purple h-100"
+            /></el-col>
+        </el-row>
+        <el-row class="mt-4">
+            <el-col :span="8" class="h-100">
+                <input id="answer" type="text" @keyup="inputAnswer" />
+            </el-col>
+        </el-row>
+        <el-row class="mt-4">
+            <!-- <el-col :span="8" class="h-100"> -->
+                <el-table :data="summary" style="width: 100%">
+                    <el-table-column prop="key" label="Word" width="180" />
+                    <el-table-column prop="correct" label="Correct Count" width="180" />
+                    <el-table-column label="Incorrect Count"><template #default="scope"><div class="text-danger">{{scope.row.incorrect}}</div></template></el-table-column>
+                </el-table>
+            <!-- </el-col> -->
+        </el-row>
+    </div>
 </template>
 <script>
 import { ref } from 'vue';
 export default {
     setup() {
         const randomString = ref('-');
-        const baseAlphabets = ref(["What", "Where", "Which", "How", "This", "There"]);
+        const baseAlphabets = ref(["What", "When", "Where", "Who", "Whom", "Which", "Whose", "Why", "How"]);
         const baseVowels = ref(["'s"]);
         const alphabets = ref([]);
         const vowels = ref([]);
@@ -59,6 +62,7 @@ export default {
         // setInterval(() => {
         //     this.getRandomString();
         // }, 3000);
+        this.focusOnKeyControl();
     },
     methods: {
         getRandomString() {
@@ -88,8 +92,7 @@ export default {
             } else {
                 this.randomColor +=1;
             }
-            document.querySelector("#answer").focus();
-            
+            this.focusOnKeyControl();
         },
         addAlphabet(str) {
             if(this.alphabets.includes(str)){
@@ -106,9 +109,29 @@ export default {
             }else{
                 this.vowels.push(str);
             }
-            
         },
-        inputAnswer(answer){
+        focusOnKeyControl() {
+            document.querySelector("#answer").focus();
+        },
+        checkAll(e) {
+            console.log({ checked: e.target.checked });
+            if(e.target.checked)
+                this.alphabets = [...this.baseAlphabets];
+            else
+                this.alphabets = [];
+        },
+        inputAnswer(e){
+            console.log({ e });
+            if(e.key == "Enter"){
+                this.getRandomString();
+            }else if(e.key == "+"){
+                this.updateSheet(true);
+            }else if(e.key == "-"){
+                this.updateSheet(false);
+            }
+            document.querySelector("#answer").value = "";
+        },
+        updateSheet(answer){
             const index = this.summary.findIndex(e=>e.key === this.randomString);
             if(index === -1){
                 this.summary.push({key: this.randomString, correct: answer ? 1 : 0, incorrect: !answer ? 1 : 0});
